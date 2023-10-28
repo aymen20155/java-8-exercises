@@ -18,6 +18,8 @@ import static com.shazam.shazamcrest.MatcherAssert.assertThat;
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 import static java.util.Arrays.asList;
 
+import java.util.Collections;
+
 @SuppressWarnings("all")
 public class Pack_1_LambdasAndMethodReferences {
 
@@ -185,6 +187,7 @@ public class Pack_1_LambdasAndMethodReferences {
         // and still having meaningful variables' names
 
         List<Node> list = asList(new Node("c"), new Node("b"), new Node("d"), new Node("a"));
+        Collections.sort(list, Comparator.comparing(Node::name));
 
         //TODO write your code here
 
@@ -205,7 +208,7 @@ public class Pack_1_LambdasAndMethodReferences {
         Formatter formatter = new Formatter();
         String result = null;
 
-        //TODO write your code here
+        result = formatter.format((Integer i) -> i, 30000);
 
         assertThat(result, sameBeanAs("£30,000.00"));
     }
