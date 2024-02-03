@@ -18,6 +18,8 @@ import static com.shazam.shazamcrest.MatcherAssert.assertThat;
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 import static java.util.Arrays.asList;
 
+import java.util.Collections;
+
 @SuppressWarnings("all")
 public class Pack_1_LambdasAndMethodReferences {
 
@@ -176,7 +178,6 @@ public class Pack_1_LambdasAndMethodReferences {
     // EXERCISES
 
 
-    @Ignore
     @Test
     public void exercise_1_sort() {
         // sort a list using Collections.sort
@@ -186,13 +187,12 @@ public class Pack_1_LambdasAndMethodReferences {
 
         List<Node> list = asList(new Node("c"), new Node("b"), new Node("d"), new Node("a"));
 
-        //TODO write your code here
+        Collections.sort(list, Comparator.comparing(Node::name));
 
         assertThat(list, sameBeanAs(asList(new Node("a"), new Node("b"), new Node("c"), new Node("d"))));
     }
 
 
-    @Ignore
     @Test
     public void exercise_2_numberFormatter() {
         // call the formatter to format int 30000 as currency
@@ -203,7 +203,7 @@ public class Pack_1_LambdasAndMethodReferences {
         // that the ambigous method call error is resolved
 
         Formatter formatter = new Formatter();
-        String result = null;
+        String result = formatter.format((Integer i) -> i, 30000);
 
         //TODO write your code here
 

@@ -4,10 +4,13 @@ import com.google.common.collect.ImmutableSet;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -50,13 +53,12 @@ public class Pack_3_Streams_Easy {
         System.out.println(captains);
     }
 
-    @Ignore
     @Test
     public void exercise_1_map_collect() {
         // divide each number by 2 (ignoring the reminder) and collect to set
 
         List<Integer> numbers = asList(1, 2, 3, 4, 5);
-        Set<Integer> result = null;
+        Set<Integer> result = numbers.stream().map(item -> item / 2).collect(Collectors.toSet());
 
         //TODO write your code here
 
@@ -75,13 +77,16 @@ public class Pack_3_Streams_Easy {
         System.out.println(processed);
     }
 
-    @Ignore
     @Test
     public void exercise_2_map() {
         // find all distinct reminders of division by 13 and collect them sorted
 
         List<String> strings = asList("9", "4", "5", "6", "2", "3", "9", "4", "3", "4", "5");
-        List<Integer> result = null;
+        List<Integer> result = strings.stream()
+        		.map(item -> Integer.valueOf(item) % 13)
+        		.distinct()
+        		.sorted()
+        		.collect(Collectors.toList());
 
         //TODO write your code here
 
@@ -96,14 +101,13 @@ public class Pack_3_Streams_Easy {
         Optional<Integer> optionalResult = emptyStream.reduce((a, b) -> a + b);
         System.out.println(optionalResult);
     }
-
-    @Ignore
+    
     @Test
     public void exercise_3_reduce() {
         // find the length of the longest string
 
         List<String> strings = asList("Lorem", "ipsum", "dolor", "sit", "amet,", "consectetur", "adipiscing", "elit.");
-        int result = 0;
+        int result = strings.stream().mapToInt(String::length).max().getAsInt();
 
         //TODO write your code here
 
@@ -123,20 +127,18 @@ public class Pack_3_Streams_Easy {
         System.out.println(sum);
     }
 
-    @Ignore
     @Test
     public void exercise_4_filter_limit() {
         // find first 5 numbers divisible by 17 generate by an infinite stream
 
         IntStream numbers = new Random(0).ints().map(Math::abs);
-        List<Integer> result = null;
+        List<Integer> result = numbers.filter(i -> i%17 == 0).limit(5).boxed().collect(Collectors.toList());
 
         //TODO write your code here
 
         assertThat(result, sameBeanAs(asList(938301587, 100082026, 356750287, 798819494, 1412716779)));
     }
 
-    @Ignore
     @Test
     public void exercise_5_collectingAndThen() {
         // collect to unmodifiable set using Collections.unmodifiableSet
@@ -144,7 +146,7 @@ public class Pack_3_Streams_Easy {
         // Arrays.stream will be useful as well
 
         Integer[] numbers = {4, 2, 3, 8, 5, 6, 3, 4, 5};
-        Set<Integer> result = null;
+        Set<Integer> result = Arrays.stream(numbers).collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
 
         //TODO write your code here
 
@@ -183,14 +185,13 @@ public class Pack_3_Streams_Easy {
                 .collect(toList());
     }
 
-    @Ignore
     @Test
     public void exercise_6_toArray() {
         // collect a stream of boxed Integers to an array Integer[]
         // hint: toArray method creates Object[], unless you pass to it a function int -> array (provided int will be the size of the stream)
 
         Stream<Integer> stream = Stream.of(1, 2, 3);
-        Integer[] result = null;
+        Integer[] result = stream.toArray(Integer[]::new);
 
         //TODO write your code here
 
